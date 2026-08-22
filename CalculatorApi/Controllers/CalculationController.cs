@@ -24,15 +24,17 @@ namespace CalculatorApi.Controllers
 
         }
         [HttpPost("division")]
-        public decimal division(decimal num1, decimal num2)
+        public string division(decimal num1, decimal num2)
         {
-            if (num2 == 0M)
+            try
             {
-                return 0;
+                return ("the resualt is : " + (num1 / num2).ToString());
             }
-            else
+            catch (Exception ex)
             {
-                return num1 / num2;
+                if (ex.GetType() == typeof(DivideByZeroException))
+                    return ("dont do that again maaan the erroe\r is:  " + ex.Message);
+                return ex.Message;
             }
 
         }
