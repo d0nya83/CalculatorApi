@@ -10,8 +10,8 @@ namespace CalculatorApi.Controllers
     [ApiController]
     public class CalculationController : ControllerBase
     {
-        [HttpPost("calculation")]
-        public IActionResult Calculation(CalculationRequest calulationRequest)
+        [HttpPost()]
+        public ActionResult<CalculationResponse> Calculation(CalculationRequest calulationRequest)
         {
             try
             {
@@ -43,7 +43,14 @@ namespace CalculatorApi.Controllers
 
                 }
 
-                return Ok(results);
+                return Ok(new CalculationResponse
+                {
+                    Success = true,
+                    Message = "عملیات " + calulationRequest.Operation +" با موفقیت انجام شد...",
+                    Result = results
+                }
+                    
+                   );
         }
             catch (Exception ex)
             {
