@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Calculation.Models;
+using CalculatorApi.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace CalculatorApi.Controllers
 {
@@ -7,64 +10,100 @@ namespace CalculatorApi.Controllers
     [ApiController]
     public class CalculationController : ControllerBase
     {
-        [HttpPost("sum")]
-        public IActionResult sum(decimal num1, decimal num2)
+        [HttpPost("calculation")]
+        public IActionResult Calculation(CalculationRequest calulationRequest)
         {
             try
             {
-                return Ok(num1 + num2);
-            }
+                decimal results = 0;
+
+                switch (calulationRequest.Operation)
+                {
+
+                    case "add":
+                    case "+":
+                        results = calulationRequest.Number1 + calulationRequest.Number2;
+                        break;
+
+                    case "minus":
+                    case "-":
+                        results = calulationRequest.Number1 - calulationRequest.Number2;
+                        break;
+
+                    case "multiplication":
+                    case "*":
+                        results = calulationRequest.Number1 * calulationRequest.Number2;
+                        break;
+
+                    case "division":
+                    case "/":
+                        results = calulationRequest.Number1 / calulationRequest.Number2;
+                        break;
+
+
+                }
+
+                return Ok(results);
+        }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
+    }
 
-
-        }
-
-        [HttpPost("minus")]
-        public IActionResult minus(decimal num1, decimal num2)
-        {
-            try
-            {
-                return Ok(num1 - num2);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-
-
-            }
-        }
-
-        [HttpPost("multiplication")]
-        public IActionResult multiplication(decimal num1, decimal num2)
-        {
-            try
-            {
-                return Ok(num1 * num2);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("division")]
-        public IActionResult division(decimal num1, decimal num2)
-        {
-            try
-            {
-                return Ok(num1 / num2);
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetType() == typeof(DivideByZeroException))
-                    return BadRequest("dont do that again maaan the erroe\r is:  " + ex.Message);
-                return BadRequest(ex.Message);
-            }
-
-        }
+}
     }
 }
- 
+
+// [HttpPost("minus")]
+// public IActionResult minus(decimal num1, decimal num2)
+// {
+//     try
+//    {
+//      return Ok(num1 - num2);
+//  }
+//   catch (Exception ex)
+//            {
+//                //return BadRequest(ex.Message);
+
+
+//            }
+//        }
+
+//        [HttpPost("multiplication")]
+//        public IActionResult multiplication(decimal num1, decimal num2)
+//        {
+//            try
+//            {
+//                return Ok(num1 * num2);
+//            }
+//            catch (Exception ex)
+//            {
+//                return BadRequest(ex.Message);
+//            }
+//        }
+
+//        [HttpPost("division")]
+//        public IActionResult division(decimal num1, decimal num2)
+//        {
+//            try
+//            {
+//                return Ok(num1 / num2);
+//            }
+//            catch (Exception ex)
+//            {
+//                if (ex.GetType() == typeof(DivideByZeroException))
+//                    return BadRequest("dont do that again maaan the erroe\r is:  " + ex.Message);
+//                return BadRequest(ex.Message);
+//            }
+
+//        }
+
+//        [HttpGet("help")]
+//        public IActionResult help()
+//        {
+//            return Ok("this is a calculator for +*-/ ...");
+//        }
+
+//    }
+//}
+
