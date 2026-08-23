@@ -8,35 +8,63 @@ namespace CalculatorApi.Controllers
     public class CalculationController : ControllerBase
     {
         [HttpPost("sum")]
-        public decimal sum(decimal num1, decimal num2)
+        public IActionResult sum(decimal num1, decimal num2)
         {
-            return num1 + num2;
-        }
-        [HttpPost("minus")]
-        public decimal minus(decimal num1, decimal num2)
-        {
-            return num1 - num2;
-        }
-        [HttpPost("multiplication")]
-        public decimal multiplication(decimal num1, decimal num2)
-        {
-            return num1 * num2;
+            try
+            {
+                return Ok(num1 + num2);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
 
         }
+
+        [HttpPost("minus")]
+        public IActionResult minus(decimal num1, decimal num2)
+        {
+            try
+            {
+                return Ok(num1 - num2);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+
+            }
+        }
+
+        [HttpPost("multiplication")]
+        public IActionResult multiplication(decimal num1, decimal num2)
+        {
+            try
+            {
+                return Ok(num1 * num2);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("division")]
         public IActionResult division(decimal num1, decimal num2)
         {
             try
             {
-                return Ok( num1 / num2);
+                return Ok(num1 / num2);
             }
             catch (Exception ex)
             {
                 if (ex.GetType() == typeof(DivideByZeroException))
-                    return BadRequest ("dont do that again maaan the erroe\r is:  " + ex.Message);
-                return BadRequest (ex.Message);
+                    return BadRequest("dont do that again maaan the erroe\r is:  " + ex.Message);
+                return BadRequest(ex.Message);
             }
 
         }
     }
 }
+ 
