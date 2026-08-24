@@ -3,6 +3,7 @@ using CalculatorApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
@@ -13,11 +14,7 @@ namespace CalculatorApi.Controllers
     [ApiController]
     public class CalculationController : ControllerBase
     {
-        [HttpGet("getOpration")]
-        public ActionResult<DefincOpration> GetOpration()
-        {
-
-            var donya = new List<DefincOpration>
+        private static List<DefincOpration> defincOprations = new List<DefincOpration>()
             {
                 new DefincOpration
                 {
@@ -52,21 +49,41 @@ namespace CalculatorApi.Controllers
                  new DefincOpration
                 {
                      Id = 5,
-                    Name = "^",
-                    Symbol = "power",
+                    Name = "power",
+                    Symbol = "^",
                 }
             };
 
-            if (donya != null)
+        [HttpGet("getOpration")]
+        public ActionResult<DefincOpration> GetOpration()
+        {
+
+            if (defincOprations != null)
             {
-                return Ok(donya);
+                return Ok(defincOprations);
             }
             else
             {
                 return BadRequest();
             }
         }
-        
+        [HttpPut("id")]
+        public ActionResult<DefincOpration> UpdateOperatore(int id, string newOperator)
+        {
+            
+            try { 
+                var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
+                if (currentOperator == null) throw new ArgumentNullException();
+                currentOperator.Name = newOperator;
+                //currentOperator.Symbol = newOperator;
+                return Ok(currentOperator);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("dff")]
         public ActionResult<CalculationResponse> Calculation(CalculationRequest calulationRequest)
         {
