@@ -3,6 +3,9 @@ using CalculatorApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 namespace CalculatorApi.Controllers
 {
@@ -10,7 +13,61 @@ namespace CalculatorApi.Controllers
     [ApiController]
     public class CalculationController : ControllerBase
     {
-        [HttpPost()]
+        [HttpGet("getOpration")]
+        public ActionResult<DefincOpration> GetOpration()
+        {
+
+            var donya = new List<DefincOpration>
+            {
+                new DefincOpration
+                {
+                    Id = 0,
+                    Name = "add",
+                    Symbol = "+",
+                },
+                new DefincOpration
+                {
+                    Id = 1,
+                    Name = "mines",
+                    Symbol = "-",
+                },
+                new DefincOpration
+                {
+                    Id = 2,
+                    Name = "division",
+                    Symbol = "/",
+                },
+                new DefincOpration
+                {
+                    Id = 3,
+                    Name = "Multiplication",
+                    Symbol = "*",
+                },
+                new DefincOpration
+                {
+                    Id = 4,
+                    Name = "Percentage",
+                    Symbol = "%",
+                },
+                 new DefincOpration
+                {
+                     Id = 5,
+                    Name = "^",
+                    Symbol = "power",
+                }
+            };
+
+            if (donya != null)
+            {
+                return Ok(donya);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
+        [HttpPost("dff")]
         public ActionResult<CalculationResponse> Calculation(CalculationRequest calulationRequest)
         {
             try
@@ -46,18 +103,18 @@ namespace CalculatorApi.Controllers
                 return Ok(new CalculationResponse
                 {
                     Success = true,
-                    Message = "عملیات " + calulationRequest.Operation +" با موفقیت انجام شد...",
+                    Message = "عملیات " + calulationRequest.Operation + " با موفقیت انجام شد...",
                     Result = results
                 }
-                    
+
                    );
-        }
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-    }
+            }
 
-}
+        }
     }
 }
 
