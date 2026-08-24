@@ -67,7 +67,7 @@ namespace CalculatorApi.Controllers
                 return BadRequest();
             }
         }
-        [HttpPut("id")]
+        [HttpPut("UpdateOperatore")]
         public ActionResult<DefincOpration> UpdateOperatore(int id, string newOperator)
         {
             
@@ -84,7 +84,7 @@ namespace CalculatorApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("id")]
+        [HttpDelete("RemoveCurrentOperator")]
         public ActionResult<DefincOpration> RemoveCurrentOperator (int id)
         {
             var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
@@ -94,7 +94,16 @@ namespace CalculatorApi.Controllers
             return Ok(currentOperator);
         }
 
-        [HttpPost("dff")]
+        [HttpGet("GetOperationById ")]
+        public ActionResult<DefincOpration> GetOperationById (int id)
+        {
+            var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
+            defincOprations.Remove(currentOperator);
+            return Ok(currentOperator);
+
+        }
+
+        [HttpPost("Calculation")]
         public ActionResult<CalculationResponse> Calculation(CalculationRequest calulationRequest)
         {
             try
