@@ -51,6 +51,12 @@ namespace CalculatorApi.Controllers
                      Id = 5,
                     Name = "power",
                     Symbol = "^",
+                },
+                  new DefincOpration
+                {
+                     Id = 6,
+                    Name = "Increase",
+                    Symbol = "++",
                 }
             };
 
