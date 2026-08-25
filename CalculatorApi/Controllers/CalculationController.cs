@@ -80,6 +80,7 @@ namespace CalculatorApi.Controllers
                 var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
                 if (currentOperator == null) throw new ArgumentNullException();
                 currentOperator.Name = newOperator;
+                currentOperator.Symbol = newOperator;
                 return Ok(currentOperator);
 
                 
