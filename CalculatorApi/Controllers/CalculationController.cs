@@ -57,10 +57,15 @@ namespace CalculatorApi.Controllers
                      Id = 6,
                     Name = "Increase",
                     Symbol = "++",
+                },
+                new DefincOpration {
+                     Id = 7,
+                    Name = "mienssss",
+                    Symbol = "--",
                 }
             };
 
-        [HttpGet("getOpration")]
+        [HttpGet("getAllOprations")]
         public ActionResult<DefincOpration> GetOpration()
         {
 
@@ -73,7 +78,7 @@ namespace CalculatorApi.Controllers
                 return BadRequest();
             }
         }
-        [HttpPut("UpdateOperatore")]
+        [HttpPut("UpdateOpration")]
         public ActionResult<DefincOpration> UpdateOperatore(int id, string newOperator)
         {
             
@@ -91,7 +96,7 @@ namespace CalculatorApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("RemoveCurrentOperator")]
+        [HttpDelete("RemoveOpration")]
         public ActionResult<DefincOpration> RemoveCurrentOperator (int id)
         {
             var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
@@ -101,7 +106,7 @@ namespace CalculatorApi.Controllers
             return Ok(currentOperator);
         }
 
-        [HttpGet("GetOperationById ")]
+        [HttpGet("GetOperationById")]
         public ActionResult<DefincOpration> GetOperationById (int id)
         {
             var currentOperator = defincOprations.FirstOrDefault(x => x.Id == id);
