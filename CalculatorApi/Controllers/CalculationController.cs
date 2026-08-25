@@ -52,9 +52,15 @@ namespace CalculatorApi.Controllers
                     Name = "power",
                     Symbol = "^",
                 },
-                new DefincOpration {
+                  new DefincOpration
+                {
                      Id = 6,
-                    Name = "misdnf",
+                    Name = "Increase",
+                    Symbol = "++",
+                },
+                new DefincOpration {
+                     Id = 7,
+                    Name = "mienssss",
                     Symbol = "--",
                 }
             };
